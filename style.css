@@ -75,6 +75,10 @@ button{
 .quiz{
     margin-top: 30px;
     border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
 }
 .quiz h3{
     padding: 20px;
@@ -85,4 +89,17 @@ button{
 }
 .styleOptionInactive{
     background-color: red;
+}
+.divPuntuacion{
+    border-radius: 200px;
+    background-color: aquamarine;
+    width: 250px;
+    border: 10px solid rgb(99, 99, 177);
+}
+
+.stylePuntuacion{
+    font-size: 80px;
+    text-align: center;
+    font-weight: bold;
+    color: rgb(43, 119, 226);
 }

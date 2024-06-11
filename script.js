@@ -5,15 +5,12 @@ let results = [];
 let index = 0;
 let respuestas = [];
 let fecha = new Date().toDateString() //Fecha para puntuacion
-console.log(fecha)
-
 
 quiz.addEventListener('click', (ev)=>{
     ev.preventDefault()
 
     if(ev.target.tagName === 'BUTTON'){
         const valueOption = ev.target.value
-        console.log(valueOption)
         validateResponse(valueOption, ev.target)
     }
     if (ev.target.id === 'siguiente') {
@@ -29,7 +26,6 @@ const getData = async () => {
             const data = await resp.json();
             results = data.results;
             printQuiz(results, index);
-            console.log(results);
         } else {
             throw new Error('Error al obtener los datos');
         }
@@ -41,7 +37,6 @@ const getData = async () => {
 const printQuiz = (results, i) => {
     quiz.innerHTML = '';
     options = [...results[i].incorrect_answers, results[i].correct_answer];
-    console.log(options);
     const pregunta = document.createElement('H3')
     pregunta.textContent = results[i].question;
     quiz.append(pregunta)
@@ -52,23 +47,27 @@ const printQuiz = (results, i) => {
         buttonOption.setAttribute('id', `option${index+1}`)
         buttonOption.classList.add(`option${index+1}`)
         buttonOption.value = opc
-        console.log(buttonOption)
         quiz.append(buttonOption)
     });
     const buttonNext = document.createElement('INPUT')
     buttonNext.setAttribute('type', 'submit')
     buttonNext.value= 'Siguiente'
     buttonNext.setAttribute('id', 'siguiente')
+    buttonNext.disabled = true;
     quiz.append(buttonNext)
+
+    if(index === 9){
+        printResults(respuestas)
+    }
 };
 
 const validateResponse = (value, button)=>{
     const buttons = document.querySelectorAll('button')
     if(value === results[index].correct_answer){
         button.classList.add('styleOptionActive')
-        respuestas.push('Correcta');
+        respuestas.push(1);
     }else{
-        respuestas.push('Incorrecta');
+        respuestas.push(0);
         button.classList.add('styleOptionInactive')
        
         const botonCorrecto = [...buttons].find((element)=> element.value === results[index].correct_answer)
@@ -76,21 +75,34 @@ const validateResponse = (value, button)=>{
             botonCorrecto.classList.add('styleOptionActive')
         }
     }
-
     const botones = document.querySelectorAll('button');
     botones.forEach(boton => {
         boton.disabled = true;
     });
-    printResults()
-    return respuestas;
+    document.getElementById('siguiente').disabled = false;
+    
 }
 
-const printResults = () => {
-    console.log(respuestas);//Utilizar para graficas y resultado final Almacenar local
+const printResults = (respuestas) => {
+    quiz.innerHTML='';
+
+    const puntuacion = respuestas.reduce((acc, sum) => acc += sum, 0);
+
+    const divPuntuacion = document.createElement('DIV')
+    divPuntuacion.classList.add('divPuntuacion')
+    const pResultado = document.createElement('P')
+    const textoResultado = document.createElement('P')
+    textoResultado.textContent = 'Este ha sido tu resultado'
+    pResultado.textContent = `${puntuacion} / 10`
+    pResultado.classList.add('stylePuntuacion')
+    divPuntuacion.append(pResultado, )
+    quiz.append(textoResultado, divPuntuacion)
 }
 
 getData()
 
 //animacion tiempo
 //animacion botones
+//Guardar en firebase y LocalStorage
+//Crear Usuarios Login y Resistro
 
