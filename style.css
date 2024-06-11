@@ -1,0 +1,88 @@
+body{
+    margin: 0;
+    padding: 0;
+    background-color: rgb(176, 189, 229);
+}
+h2, h3{
+    margin: 0;
+}
+.contenedor{
+    max-width: 1200px;
+    margin: 0 auto;
+}
+header{
+    background-color: rgb(22, 75, 145);
+    height: 50px;
+}
+header h2{
+    color: white;
+    font-size: 40px;
+    text-align: center;
+}
+section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 20px;
+    background-color: white;
+    width: 70%;
+    margin: 0 auto;
+}
+button{
+    height: 60px;
+    width: 90%;
+    margin: 0 auto;
+    border: none;
+    border-radius: 10px;
+    
+}
+@media (min-width: 468px) {
+   
+}
+
+.option1{
+    background-color: rgb(92, 94, 90);
+}
+.option2{
+    background-color: rgb(19, 123, 139);
+}
+.option3{
+    background-color: blueviolet;
+}
+.option4{
+    background-color: palevioletred;
+}
+#siguiente{
+    background-color: blue;
+}
+#option1, #option2, #option3, #option4, #siguiente{
+    color: white;
+    cursor: pointer;
+    font-size: 20px;
+}
+#option1:hover, #option2:hover, #option3:hover, #option4:hover, #siguiente:hover{
+    filter: brightness(80%);
+}
+
+#siguiente{
+    width: 50%;
+    align-self: flex-end;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 20px 5px;
+}
+.quiz{
+    margin-top: 30px;
+    border-radius: 5px;
+}
+.quiz h3{
+    padding: 20px;
+}
+
+.styleOptionActive{
+    background-color: yellowgreen;
+}
+.styleOptionInactive{
+    background-color: red;
+}
