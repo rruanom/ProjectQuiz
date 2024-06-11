@@ -159,7 +159,7 @@ const darDeAlta = (nombreJugador, email, password) => {
 
 };
 
-const crearUsuario = (players) => {
+const crearPlayer = (players) => {
     db.collection("players")
         .doc(players.email)
         .set(players)
