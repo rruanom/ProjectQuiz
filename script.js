@@ -106,3 +106,64 @@ getData()
 //Guardar en firebase y LocalStorage
 //Crear Usuarios Login y Resistro
 
+const logearPlayer = (email, password) => {
+firebase.auth().signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+            let player = userCredential.user;
+            console.log(`se ha logado ${player.email} ID:${player.uid}`)
+            alert(`se ha logado ${player.email} ID:${player.uid}`)
+            console.log("USER", player);
+            //AQUI LLAMARIAMOS A LA FUNCION PARA IR A LA PANTALLA  DE INICIO
+        })
+        .catch((error) => {
+            let errorCode = error.code;
+            let errorMessage = error.message;
+            console.log(errorCode)
+            console.log(errorMessage)
+
+        });
+
+};
+
+const salirPlayer = () => {
+    let player = firebase.auth().currentUser;
+
+    firebase.auth().signOut().then(() => {
+        console.log("Sale del sistema: " + player.nombreJugador)
+    }).catch((error) => {
+        console.log("hubo un error: " + error);
+    });
+    location.reload()
+}
+
+const darDeAlta = (nombreJugador, email, password) => {
+    firebase
+        .auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+            let player = userCredential.user;
+            console.log(`se ha registrado ${player.email} ID:${player.uid}`)
+            alert(`se ha registrado ${player.nombreUsuario}`)
+            // Guardamos el usuario en firebase
+            crearUsuario({
+                id: player.uid,
+                email: player.email,
+                Puntuaciones: [],
+                nombreJugador: nombreJugador
+            });
+            //pintarLogin(); aqui iria la funcion para ir a la pantalla de logearse
+        })
+        .catch((error) => {
+            console.log("Error en el sistema" + error.message, "Error: " + error.code);
+        });
+
+};
+
+const crearUsuario = (players) => {
+    db.collection("players")
+        .doc(players.email)
+        .set(players)
+        .then(() => console.log(`usuario guardado correctamente con id: ${players.email}`))
+        .catch((error) => console.error("Error adding document: ", error));
+};
+
